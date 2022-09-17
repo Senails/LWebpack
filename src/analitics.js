@@ -15,7 +15,7 @@ function createanalytics() {
             flag = true;
         },
         getclicks() {
-            return !flag ? counter : 'Analitycs is destroyd !!!';
+            return !flag ? counter : 'Analitycs is destroyd !!!!!!!!!!!';
         }
     }
 }

@@ -9,4 +9,7 @@ export class Post {
             date: this.date.toJSON(),
         })
     }
+    getUpper() {
+        return this.titel.toUpperCase();
+    }
 }

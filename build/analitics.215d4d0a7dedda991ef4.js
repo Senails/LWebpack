@@ -9,13 +9,13 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/analitics.js":
-/*!**************************!*\
-  !*** ./src/analitics.js ***!
-  \**************************/
+/***/ "./analitics.js":
+/*!**********************!*\
+  !*** ./analitics.js ***!
+  \**********************/
 /***/ (() => {
 
-eval("function createanalytics() {\r\n    let counter = 0;\r\n    let flag = false;\r\n\r\n    let clickhand = () => {\r\n        counter++;\r\n        console.log(counter)\r\n    }\r\n\r\n    document.addEventListener('click', clickhand);\r\n\r\n    return {\r\n        destoy() {\r\n            document.removeEventListener('click', clickhand);\r\n            flag = true;\r\n        },\r\n        getclicks() {\r\n            return !flag ? counter : 'Analitycs is destroyd !!!';\r\n        }\r\n    }\r\n}\r\n\r\nwindow.analytics = createanalytics();\n\n//# sourceURL=webpack://lwebpack/./src/analitics.js?");
+eval("function createanalytics() {\r\n    let counter = 0;\r\n    let flag = false;\r\n\r\n    let clickhand = () => {\r\n        counter++;\r\n        console.log(counter)\r\n    }\r\n\r\n    document.addEventListener('click', clickhand);\r\n\r\n    return {\r\n        destoy() {\r\n            document.removeEventListener('click', clickhand);\r\n            flag = true;\r\n        },\r\n        getclicks() {\r\n            return !flag ? counter : 'Analitycs is destroyd !!!!!!!!!!!';\r\n        }\r\n    }\r\n}\r\n\r\nwindow.analytics = createanalytics();\n\n//# sourceURL=webpack:///./analitics.js?");
 
 /***/ })
 
@@ -26,7 +26,7 @@ eval("function createanalytics() {\r\n    let counter = 0;\r\n    let flag = fal
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module can't be inlined because the eval devtool is used.
 /******/ 	var __webpack_exports__ = {};
-/******/ 	__webpack_modules__["./src/analitics.js"]();
+/******/ 	__webpack_modules__["./analitics.js"]();
 /******/ 	
 /******/ })()
 ;
