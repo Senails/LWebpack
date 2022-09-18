@@ -1,20 +1,42 @@
 const path = require('path');
-const webpack = require('webpack');
-const webpackdevserver = require('webpack-dev-server');
 const HTMLwebpack = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const Terserwebpackplugin = require('terser-webpack-plugin');
+
 
 /**@type {import('webpack').Configuration}*/
 
 
-function selectpath() {
+const isDev = process.env.NODE_ENV === "development";
+const isprod = isDev ? false : true;
 
+
+function optimization() {
+    let config = {
+        splitChunks: {
+            chunks: "all",
+        },
+    }
+
+    if (isprod) {
+        config.minimizer = [
+            new CssMinimizerPlugin(),
+            new Terserwebpackplugin()
+        ]
+    }
+    return config
 }
 
 
+
+
+console.log(isDev ? "development" : "production");
 module.exports = {
     context: path.resolve(__dirname, 'src'),
-    mode: "development",
+    mode: isDev ? "development" : "production",
     entry: {
         main: "./index.js",
     },
@@ -30,26 +52,33 @@ module.exports = {
 
         }
     },
-    optimization: {
-        splitChunks: {
-            chunks: "all",
-        },
-    },
+    optimization: optimization(),
     devServer: {
         open: true,
-        // hot: true,
+        hot: isDev,
         port: 9000,
     },
     plugins: [
         new HTMLwebpack({
             template: "./index.html",
+            minify: {
+                collapseWhitespace: isprod,
+            }
         }),
         new CleanWebpackPlugin(),
+        new CopyPlugin({
+            patterns: [
+                { from: './favicon.ico', to: './' },
+            ]
+        }),
+        new MiniCssExtractPlugin({
+            filename: '[name].[contenthash].css',
+        }),
     ],
     module: {
         rules: [{
                 test: /.+\.css$/,
-                use: ['style-loader', 'css-loader']
+                use: [MiniCssExtractPlugin.loader, 'css-loader']
             },
             {
                 test: /\.(png|svg|jpg|jpeg|gif)$/i,
@@ -62,7 +91,15 @@ module.exports = {
             {
                 test: /\.csv$/,
                 use: ['csv-loader']
-            }
+            },
+            {
+                test: /.+\.(scss|sass)$/,
+                use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+            },
+            {
+                test: /.+\.less$/,
+                use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader']
+            },
         ]
     }
 
