@@ -1,6 +1,6 @@
 import * as $ from 'jquery';
 
-function createanalytics() {
+function createanalytics():Object {
     let counter = 0;
     let flag = false;
 
@@ -22,4 +22,4 @@ function createanalytics() {
     }
 }
 
-window.analytics = createanalytics();
+window["analytics"] = createanalytics();

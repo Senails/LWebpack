@@ -29,6 +29,18 @@ function optimization() {
     }
     return config
 }
+const filename = ext => isDev ? `[name].${ext}` : `[name].[hash].${ext}`;
+
+function cssloaders(extra) {
+    let arr = [MiniCssExtractPlugin.loader, 'css-loader'];
+    if (!extra) return arr;
+    return [...arr, extra];
+}
+
+function babeloption(extra) {
+    if (extra) return { presets: ['@babel/preset-env'] }
+    return { presets: ['@babel/preset-env', extra] }
+}
 
 
 
@@ -38,10 +50,11 @@ module.exports = {
     context: path.resolve(__dirname, 'src'),
     mode: isDev ? "development" : "production",
     entry: {
-        main: "./index.js",
+        main: "./index.jsx",
+        analit: "./analitics.ts"
     },
     output: {
-        filename: '[name].[contenthash].js',
+        filename: filename('.js'),
         path: path.resolve(__dirname, 'build'),
     },
     resolve: {
@@ -55,7 +68,7 @@ module.exports = {
     optimization: optimization(),
     devServer: {
         open: true,
-        hot: isDev,
+        // hot: isDev,
         port: 9000,
     },
     plugins: [
@@ -72,13 +85,13 @@ module.exports = {
             ]
         }),
         new MiniCssExtractPlugin({
-            filename: '[name].[contenthash].css',
+            filename: filename('.css'),
         }),
     ],
     module: {
         rules: [{
                 test: /.+\.css$/,
-                use: [MiniCssExtractPlugin.loader, 'css-loader']
+                use: cssloaders(),
             },
             {
                 test: /\.(png|svg|jpg|jpeg|gif)$/i,
@@ -94,11 +107,41 @@ module.exports = {
             },
             {
                 test: /.+\.(scss|sass)$/,
-                use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+                use: cssloaders('sass-loader'),
             },
             {
                 test: /.+\.less$/,
-                use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader']
+                use: cssloaders('less-loader'),
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader",
+                    options: babeloption("@babel/preset-typescript")
+                }
+            },
+            {
+                test: /\.ts?$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        presets: ['@babel/preset-env', "@babel/preset-typescript"],
+                        plugins: []
+                    }
+                }
+            },
+            {
+                test: /\.jsx?$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        presets: ['@babel/preset-env', "@babel/preset-react"],
+                        plugins: ["@babel/plugin-syntax-jsx"]
+                    }
+                }
             },
         ]
     }

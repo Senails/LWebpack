@@ -389,11 +389,18 @@ pre {
     width: 600px;
     margin: 0 auto;
     color: red;
-    /* color: black; */
+    color: black;
 }
 /*!**************************************************************************************************************!*\
   !*** css ../node_modules/css-loader/dist/cjs.js!../node_modules/sass-loader/dist/cjs.js!./styles/style.scss ***!
   \**************************************************************************************************************/
 body {
-  background-color: rgb(169, 169, 169);
+  background-color: rgb(231, 239, 250);
+}
+body #box {
+  margin: 0 auto;
+  text-align: center;
+  width: 500px;
+  font-size: 40px;
+  color: blue;
 }
