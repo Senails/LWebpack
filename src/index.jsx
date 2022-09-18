@@ -14,7 +14,7 @@ $('pre').html(post.toString() + "1");
 
 const App = ()=>{
     return <div className='reactbox'>
-        Это реакт бокс
+        Это реакт бокс отрендерен реактом
     </div>
 }
 
