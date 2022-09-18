@@ -1,3 +1,5 @@
+import * as $ from 'jquery';
+
 function createanalytics() {
     let counter = 0;
     let flag = false;
@@ -7,11 +9,11 @@ function createanalytics() {
         console.log(counter)
     }
 
-    document.addEventListener('click', clickhand);
+    $(document).on('click', clickhand)
 
     return {
         destoy() {
-            document.removeEventListener('click', clickhand);
+            $(document).off('click', clickhand)
             flag = true;
         },
         getclicks() {
