@@ -29,7 +29,11 @@ function optimization() {
     }
     return config
 }
-const filename = ext => isDev ? `[name].${ext}` : `[name].[hash].${ext}`;
+const filename = (ext) => {
+
+
+    return isDev ? `[name].${ext}` : `[name].[hash].${ext}`
+};
 
 function cssloaders(extra) {
     let arr = [MiniCssExtractPlugin.loader, 'css-loader'];
@@ -54,7 +58,7 @@ module.exports = {
         analit: "./analitics.ts"
     },
     output: {
-        filename: filename('.js'),
+        filename: "JS/" + filename('js'),
         path: path.resolve(__dirname, 'build'),
     },
     resolve: {
@@ -66,6 +70,7 @@ module.exports = {
         }
     },
     optimization: optimization(),
+    devtool: isDev ? "source-map" : undefined,
     devServer: {
         open: true,
         // hot: isDev,
@@ -85,7 +90,7 @@ module.exports = {
             ]
         }),
         new MiniCssExtractPlugin({
-            filename: filename('.css'),
+            filename: "CSS/" + filename('.css'),
         }),
     ],
     module: {
@@ -94,8 +99,11 @@ module.exports = {
                 use: cssloaders(),
             },
             {
-                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                test: /\.(png|svg|jpg|jpeg|gif|ttf)$/i,
                 type: 'asset/resource',
+                generator: {
+                    filename: 'assets/[name].[ext]',
+                },
             },
             {
                 test: /\.xml$/,

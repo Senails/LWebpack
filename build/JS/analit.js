@@ -1,11 +1,3 @@
-/*
- * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
- * This devtool is neither made for production nor for readable output files.
- * It uses "eval()" calls to create a separate source file in the browser devtools.
- * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
- * or disable the default devtool with "devtool: false".
- * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
- */
 /******/ (function() { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -16,7 +8,33 @@
   \**********************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ \"../node_modules/jquery/dist/jquery.js\");\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);\n\n\nfunction createanalytics() {\n  var counter = 0;\n  var flag = false;\n\n  var clickhand = function clickhand() {\n    counter++;\n    console.log(counter);\n  };\n\n  jquery__WEBPACK_IMPORTED_MODULE_0__(document).on('click', clickhand);\n  return {\n    destoy: function destoy() {\n      jquery__WEBPACK_IMPORTED_MODULE_0__(document).off('click', clickhand);\n      flag = true;\n    },\n    getclicks: function getclicks() {\n      return !flag ? counter : 'Analitycs is destroyd !!!!!!!!!!!';\n    }\n  };\n}\n\nwindow[\"analytics\"] = createanalytics();\n\n//# sourceURL=webpack:///./analitics.ts?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "../node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function createanalytics() {
+  var counter = 0;
+  var flag = false;
+
+  var clickhand = function clickhand() {
+    counter++;
+    console.log(counter);
+  };
+
+  jquery__WEBPACK_IMPORTED_MODULE_0__(document).on('click', clickhand);
+  return {
+    destoy: function destoy() {
+      jquery__WEBPACK_IMPORTED_MODULE_0__(document).off('click', clickhand);
+      flag = true;
+    },
+    getclicks: function getclicks() {
+      return !flag ? counter : 'Analitycs is destroyd !!!!!!!!!!!';
+    }
+  };
+}
+
+window["analytics"] = createanalytics();
 
 /***/ })
 
@@ -189,3 +207,4 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var jque
 /******/ 	
 /******/ })()
 ;
+//# sourceMappingURL=analit.js.map
