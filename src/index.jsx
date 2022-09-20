@@ -20,3 +20,17 @@ const App = ()=>{
 
 let root = createRoot(document.querySelector("#box"));
 root.render(<App/>);
+
+
+let a = 6;
+
+
+
+
+
+
+
+
+
+
+//

@@ -5,7 +5,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const Terserwebpackplugin = require('terser-webpack-plugin');
-
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 /**@type {import('webpack').Configuration}*/
 
@@ -47,6 +47,32 @@ function babeloption(extra) {
 }
 
 
+function plugins() {
+    let obj = [
+        new HTMLwebpack({
+            template: "./index.html",
+            minify: {
+                collapseWhitespace: isprod,
+            }
+        }),
+        new CleanWebpackPlugin(),
+        new CopyPlugin({
+            patterns: [
+                { from: './favicon.ico', to: './' },
+            ]
+        }),
+        new MiniCssExtractPlugin({
+            filename: "CSS/" + filename('.css'),
+        }),
+    ];
+
+    if (isprod) obj.push(new BundleAnalyzerPlugin());
+
+
+
+    return obj;
+}
+
 
 
 console.log(isDev ? "development" : "production");
@@ -76,23 +102,7 @@ module.exports = {
         // hot: isDev,
         port: 9000,
     },
-    plugins: [
-        new HTMLwebpack({
-            template: "./index.html",
-            minify: {
-                collapseWhitespace: isprod,
-            }
-        }),
-        new CleanWebpackPlugin(),
-        new CopyPlugin({
-            patterns: [
-                { from: './favicon.ico', to: './' },
-            ]
-        }),
-        new MiniCssExtractPlugin({
-            filename: "CSS/" + filename('.css'),
-        }),
-    ],
+    plugins: plugins(),
     module: {
         rules: [{
                 test: /.+\.css$/,
@@ -124,32 +134,34 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                use: {
+                use: [{
                     loader: "babel-loader",
-                    options: babeloption("@babel/preset-typescript")
-                }
+                    options: {
+                        presets: ['@babel/preset-env'],
+                    }
+                }]
             },
             {
-                test: /\.ts?$/,
+                test: /\.(ts|tsx)$/,
                 exclude: /node_modules/,
                 use: {
                     loader: "babel-loader",
                     options: {
                         presets: ['@babel/preset-env', "@babel/preset-typescript"],
-                        plugins: []
+                        plugins: ["@babel/plugin-syntax-jsx"]
                     }
                 }
             },
             {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
-                use: {
+                use: [{
                     loader: "babel-loader",
                     options: {
                         presets: ['@babel/preset-env', "@babel/preset-react"],
                         plugins: ["@babel/plugin-syntax-jsx"]
                     }
-                }
+                }]
             },
         ]
     }
